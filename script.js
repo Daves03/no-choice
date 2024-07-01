@@ -40,7 +40,7 @@ const gifUrls = [
       var buttonWidth = button.offsetWidth;
       var buttonHeight = button.offsetHeight;
       var screenWidth = window.innerWidth - buttonWidth;
-      var screenHeight = window.innerHeight - buttonHeight - 50; // Adjust for button container height
+      var screenHeight = window.innerHeight - buttonHeight - 500; // Adjust for button container height
       
       var randomX = Math.random() * screenWidth;
       var randomY = Math.random() * screenHeight;
@@ -51,8 +51,6 @@ const gifUrls = [
       if (randomY < 0) randomY = 0;
       if (randomY > screenHeight) randomY = screenHeight;
       
-      button.style.left = randomX + 'px';
-      button.style.top = randomY + 'px';
   }
 
   function showLove() {
