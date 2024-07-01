@@ -57,7 +57,7 @@ const gifUrls = [
 
   function showLove() {
       gifElement.src = "giphy (6).gif"; // Replace with your desired GIF for "Yes" response
-      gifTextElement.textContent = "Really????, I love youuuuu!";
+      gifTextElement.textContent = "Really???? I love youuuuu!";
       gifElement.style.display = "block";
       gifTextElement.style.display = "block";
       
