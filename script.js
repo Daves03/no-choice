@@ -51,6 +51,8 @@ const gifUrls = [
       if (randomY < 0) randomY = 0;
       if (randomY > screenHeight) randomY = screenHeight;
       
+      button.style.left = randomX + 'px';
+      button.style.top = randomY + 'px';
   }
 
   function showLove() {
