@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pop-Up GIF</title>
+<style>
+    body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background-color: lightcoral;
+        font-family: Arial, sans-serif;
+    }
+    #gif-container {
+        position: relative;
+        width: 50%;
+        height: auto;
+    }
+    #gif {
+        display: block;
+        width: 100%;
+        height: auto;
+    }
+    #gif-text {
+        position: absolute;
+        top: -60px;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: rgba(255, 255, 255, 0.8);
+        padding: 10px;
+        font-size: 18px;
+        text-align: center;
+        border-radius: 5px;
+        font-weight: bold;
+        display: none;
+    }
+    .button-container {
+        position: relative;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        z-index: 1;
+        margin-top: 20px;
+    }
+    #button, #buttonyes {
+        margin: 10px;
+        padding: 10px 20px;
+        font-size: 16px;
+    }
+       #button {
+        position: absolute;
+        left: 20%;
+        bottom: -50px;
+    }
+    #buttonyes {
+        position: absolute;
+        bottom: -50px;
+        left: 60%;
+        transform: translateX(-50%);
+    }
+    @media (max-width: 600px) {
+        #gif-container {
+            width: 80%;
+        }
+        #gif-text {
+            font-size: 14px;
+            padding: 8px;
+        }
+        #button, #buttonyes {
+            padding: 8px 16px;
+            font-size: 14px;
+        }
+    }
+</style>
+</head>
+<body>
+<div id="gif-container">
+    <img id="gif" src="giphy (10).gif" alt="pop-up gif">
+    <div id="gif-text">Can you be my girlfriend?</div>
+</div>
+<div class="button-container">
+    <button id="button" onclick="moveButton()">No</button>
+    <button id="buttonyes" onclick="showLove()">Yes</button>
+</div>
+
+<script>
+    const gifUrls = [
+      "images/giphy (8).gif",
+        "images/giphy (1).gif",
+        "images/giphy (2).gif",
+        "images/giphy (3).gif",
+        "images/giphy (4).gif",
+        "images/giphy (5).gif",
+        "images/giphy (9).gif",
+        "images/giphy (10).gif",
+        "images/giphy (6).gif"
+    ];
+
+    const excludedGifs = ["images/giphy (6).gif", "images/giphy (8).gif"]; // Gifs to be excluded from 'No' clicks
+
+    let currentIndex = 0;
+
+    const gifElement = document.getElementById("gif");
+    const gifTextElement = document.getElementById("gif-text");
+    const noButton = document.getElementById("button");
+    const yesButton = document.getElementById("buttonyes");
+
+    // Display initial GIF and text
+    gifElement.style.display = "block";
+    gifTextElement.style.display = "block";
+
+    document.addEventListener("DOMContentLoaded", () => {
+        gifElement.src = gifUrls[0];
+        gifTextElement.textContent = "Can you be my girlfriend?";
+    });
+
+    noButton.addEventListener("click", () => {
+        currentIndex = getNextValidIndex(currentIndex);
+        gifElement.src = gifUrls[currentIndex];
+        gifTextElement.style.display = "block";
+        gifTextElement.textContent = "Can you be my girlfriend?";
+    });
+
+    function moveButton() {
+        var button = document.getElementById('button');
+        var buttonWidth = button.offsetWidth;
+        var buttonHeight = button.offsetHeight;
+        var screenWidth = window.innerWidth - buttonWidth;
+        var screenHeight = window.innerHeight - buttonHeight - 50; // Adjust for button container height
+        
+        var randomX = Math.random() * screenWidth;
+        var randomY = Math.random() * screenHeight;
+        
+        // Ensure button stays within the viewport
+        if (randomX < 0) randomX = 0;
+        if (randomX > screenWidth) randomX = screenWidth;
+        if (randomY < 0) randomY = 0;
+        if (randomY > screenHeight) randomY = screenHeight;
+        
+        button.style.left = randomX + 'px';
+        button.style.top = randomY + 'px';
+    }
+
+    function showLove() {
+        gifElement.src = "images/giphy (6).gif"; // Replace with your desired GIF for "Yes" response
+        gifTextElement.textContent = "Really????, I love youuuuu!";
+        gifElement.style.display = "block";
+        gifTextElement.style.display = "block";
+        
+        // Disable further interaction
+        noButton.disabled = true;
+        yesButton.disabled = true;
+        noButton.style.cursor = 'not-allowed';
+        yesButton.style.cursor = 'not-allowed';
+    }
+
+    function getNextValidIndex(currentIndex) {
+        let nextIndex = currentIndex + 1;
+        if (nextIndex >= gifUrls.length) {
+            nextIndex = 0;
+        }
+        while (excludedGifs.includes(gifUrls[nextIndex])) {
+            nextIndex++;
+            if (nextIndex >= gifUrls.length) {
+                nextIndex = 0;
+            }
+        }
+        return nextIndex;
+    }
+</script>
+</body>
+</html>
